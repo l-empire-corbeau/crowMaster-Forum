@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Le Perchoir - Forum crowMaster</title>
 <meta name="description" content="Le Perchoir : le forum de la communauté crowMaster. Entraide, boss, guildes, artisanat et bêta.">
-<link rel="stylesheet" href="assets/style/style.css">
+<link rel="stylesheet" href="assets/style/forum.css">
 </head>
 <body>
 <header><div class="bar">
@@ -75,10 +75,8 @@ function list(){
 function post(p,i){const[n,d,t,l]=p,r=U[n]||'nov';
  return `<div class="post ${i?'':'op'}" style="animation-delay:${i*.07}s">${av(n)}<div class="pb"><div class="ph"><strong>${esc(n)}</strong><span class="rank ${r==='mod'?'mod':''}">${R[r]}</span><span class="meta">${d} · #${i+1}</span></div><div class="pt">${t}</div><div class="pf"><button class="like" data-l="${l}">👍 <span>${l}</span></button></div></div></div>`}
 function thread(t){
- $('main').innerHTML=`<button class="back" onclick="location.hash=''">← Retour aux discussions</button><div class="head"><h1>${t.title}</h1></div>`+t.posts.map(post).join('')+
- `<div class="reply"><strong>Répondre</strong><textarea id="rt" placeholder="Votre message…"></textarea><div class="row"><input id="rn" placeholder="Votre pseudo" maxlength="20"><button class="btn" id="rb">Publier</button></div></div>`;
+ $('main').innerHTML=`<button class="back" onclick="location.hash=''">← Retour aux discussions</button><div class="head"><h1>${t.title}</h1></div>`+t.posts.map(post).join('');
  document.querySelectorAll('.like').forEach(b=>b.onclick=()=>{const on=b.classList.toggle('on'),s=b.querySelector('span');s.textContent=+b.dataset.l+(on?1:0)});
- $('rb').onclick=()=>{const m=$('rt').value.trim();if(!m)return;t.posts.push([($('rn').value.trim()||'Invité'),"à l'instant",esc(m).replace(/\n/g,'<br>'),0]);thread(t);scrollTo({top:document.body.scrollHeight,behavior:'smooth'})};
 }
 function render(){side();const m=location.hash.match(/^#t(\d+)$/),t=m&&T.find(x=>x.id==m[1]);t?thread(t):list();if(t)scrollTo(0,0)}
 $('q').oninput=e=>{q=e.target.value.toLowerCase();location.hash='';list()};
