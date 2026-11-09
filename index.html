@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le Perchoir - Forum crowMaster</title>
+<meta name="description" content="Le Perchoir : le forum de la communauté crowMaster. Entraide, boss, guildes, artisanat et bêta.">
+<link rel="stylesheet" href="assets/style/style.css">
+</head>
+<body>
+<header><div class="bar">
+  <div class="logo" onclick="location.hash=''"><i>🐦</i><div>Le Perchoir<small>Forum crowMaster</small></div></div>
+  <div class="search"><input id="q" type="search" placeholder="Rechercher une discussion…"></div>
+  <a class="btn" href="https://flexarion-jeu.fr/betaSignup.html" target="_blank" rel="noopener">Rejoindre la bêta</a>
+</div></header>
+<div class="layout">
+  <aside><div class="cats" id="cats"></div>
+    <div class="stats" id="stats"></div></aside>
+  <main id="main"></main>
+</div>
+<footer>Le Perchoir · Forum de démonstration autour de crowMaster · Les pseudos et discussions sont fictifs.</footer>
+<script>
+const CATS={all:'Toutes les discussions',beta:'Bêta & inscription',boss:'Boss & combats',craft:'Artisanat & ressources',guild:'Guildes & PVP',general:'Général'};
+const R={nov:'Corbeau novice',vet:'Plume aguerrie',max:'Maître des ciels',mod:'Modérateur'};
+const U={Gribouille47:'nov',Kaelwyn_:'max',n0ctua:'vet',ZéphyrLeVif:'vet',TontonCorvus:'max',Mirabelle_exe:'vet',pixelPaprika:'nov',Valdrik:'max',LeBarbuDuNord:'vet',Oksana_M:'nov',Corvus_Modo:'mod'};
+const T=[
+{id:1,cat:'beta',title:"Où se trouve l'inscription à la bêta ? 😅",views:842,posts:[
+ ['Gribouille47','il y a 3 j',"Salut tout le monde ! J'ai vu passer des posts sur la bêta fermée de crowMaster mais je ne trouve pas où m'inscrire. Quelqu'un a le lien ? Merci d'avance 🙏",4],
+ ['Kaelwyn_','il y a 3 j',"Salut ! C'est le bouton « Rejoindre la Bêta » en haut à droite du site officiel. Sinon voilà le lien direct : <a href='https://flexarion-jeu.fr/betaSignup.html' target='_blank' rel='noopener'>flexarion-jeu.fr/betaSignup.html</a>. Tu mets juste ton adresse e-mail et tu recevras ton invitation quand les sessions de test fermées démarreront.",19],
+ ['Gribouille47','il y a 3 j',"Ahah j'étais passé juste à côté depuis des jours… C'est fait, merci Kaelwyn ! 🐦",3],
+ ['n0ctua','il y a 2 j',"Petite question : vous avez reçu un mail de confirmation après ? Moi rien pour l'instant.",2],
+ ['Kaelwyn_','il y a 2 j',"Pas de mail de mon côté non plus, je pense que tout part au moment des sessions. Regarde quand même dans tes spams, on ne sait jamais !",6]]},
+{id:2,cat:'boss',title:"Boss divin : on se fait raser en boucle, des conseils ?",views:1310,posts:[
+ ['ZéphyrLeVif','il y a 2 j',"On est 4 dans la guilde et on tente le boss divin depuis hier soir. On tombe dès la 2e phase à chaque fois, même en restant à distance. Des tips ? 😭",11],
+ ['TontonCorvus','il y a 2 j',"4, c'est vraiment juste. Ces boss sont faits pour un groupe, je tenterais avec 6 ou 8 joueurs minimum. Et répartissez les rôles : deux qui attirent son attention, les autres qui frappent pendant qu'il est occupé.",24],
+ ['Mirabelle_exe','il y a 2 j',"+1. Et améliorez votre équipement avant ! On a perdu trois soirées parce que nos armures n'étaient pas au niveau. Fabriquez un set complet puis retentez.",14],
+ ['ZéphyrLeVif','il y a 2 j',"OK on recrute du monde et on passe par l'artisanat d'abord. Merci les gars, on vous dit si ça passe !",3],
+ ['ZéphyrLeVif','il y a 1 j',"UPDATE : on l'a eu à 7 !!! 🔥 Merci pour les conseils, la répartition des rôles a tout changé.",31],
+ ['Corvus_Modo','il y a 1 j',"Bravo à vous ! Pensez à poster une capture de votre trophée dans « Général » 😉",8]]},
+{id:3,cat:'craft',title:"Plumes d'obsidienne introuvables, je tourne en rond",views:967,posts:[
+ ['pixelPaprika','il y a 5 j',"Ça fait 2h que je fouille les falaises du nord pour des plumes d'obsidienne et je n'en ai pas vu une seule. Je rate un truc ?",5],
+ ['Valdrik','il y a 5 j',"Elles ne tombent pas par terre ! Il faut les récolter sur les nids abandonnés, en hauteur. Monte au-dessus de la ligne des nuages et regarde sur les corniches.",17],
+ ['LeBarbuDuNord','il y a 4 j',"Confirmé. Et si tu peux, vas-y à deux : c'est plus rapide et beaucoup moins risqué avec les créatures qui rôdent.",9],
+ ['pixelPaprika','il y a 4 j',"14 plumes en 20 minutes grâce à vous, vous êtes des légendes 🙌",7]]},
+{id:4,cat:'general',title:"Montrez-moi vos nids ! 🪹",views:604,posts:[
+ ['Mirabelle_exe','il y a 6 j',"Je viens de finir de décorer le mien : vitrine pour mes trophées de boss et un mur d'armures. Et vous, il ressemble à quoi ?",16],
+ ['Oksana_M','il y a 6 j',"Joli ! Moi j'ai tout misé sur les armes, dix lames exposées. Par contre je manque de place, ça devient un petit musée 😂",8],
+ ['Kaelwyn_','il y a 5 j',"Un nid bien rangé, c'est la classe. Le but c'est quand même que les autres joueurs viennent admirer ce qu'on a accompli.",5]]},
+{id:5,cat:'guild',title:"[Recrutement] Les Ailes Cendrées · FR · ambiance chill",views:455,posts:[
+ ['Valdrik','il y a 4 j',"On est 12, on vise les boss divins le week-end sans aucune obligation de connexion. Les débutants sont les bienvenus, on explique tout !",12],
+ ['n0ctua','il y a 4 j',"Dispo ! Je joue surtout le soir, niveau moyen. Je te MP ?",1],
+ ['Valdrik','il y a 4 j',"Avec plaisir, je t'envoie ça en MP. Bienvenue parmi nous 🐦‍⬛",4]]},
+{id:6,cat:'guild',title:"Le PVP est-il équilibré selon vous ?",views:733,posts:[
+ ['LeBarbuDuNord','il y a 7 j',"Honnêtement j'adore, mais j'ai l'impression que certains pouvoirs prennent le dessus quand on a beaucoup progressé. Vous en pensez quoi ?",6],
+ ['TontonCorvus','il y a 7 j',"Ça dépend surtout de la façon de monter son perso. Avec un build polyvalent tu tiens tête à tout le monde, il faut juste apprendre à anticiper.",10],
+ ['Oksana_M','il y a 6 j',"D'accord avec Tonton. J'ai perdu plein de duels avant de comprendre qu'il fallait jouer avec le décor et la hauteur. Depuis ça va beaucoup mieux !",7]]}
+];
+const col=n=>{let h=0;for(const c of n)h=(h*31+c.charCodeAt(0))%360;return `hsl(${h} 75% 68%)`};
+const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const av=n=>`<div class="av" style="background:${col(n)}">${esc(n[0].toUpperCase())}</div>`;
+let cat='all',q='';
+const $=id=>document.getElementById(id);
+function side(){
+ $('cats').innerHTML='<h4>Catégories</h4>'+Object.entries(CATS).map(([k,v])=>`<button class="cat ${k===cat?'on':''}" data-k="${k}">${v}<span>${k==='all'?T.length:T.filter(t=>t.cat===k).length}</span></button>`).join('');
+ document.querySelectorAll('.cat').forEach(b=>b.onclick=()=>{cat=b.dataset.k;location.hash='';render()});
+ const p=T.reduce((a,t)=>a+t.posts.length,0);
+ $('stats').innerHTML=`<b>${T.length}</b> discussions · <b>${p}</b> messages<br><b>${Object.keys(U).length}</b> membres actifs`;
+}
+function list(){
+ const f=T.filter(t=>(cat==='all'||t.cat===cat)&&(t.title+t.posts.map(p=>p[2]).join(' ')).toLowerCase().includes(q));
+ $('main').innerHTML=`<div class="head"><h1>${CATS[cat]}</h1></div>`+(f.length?f.map((t,i)=>{const o=t.posts[0],l=t.posts[t.posts.length-1];
+  return `<div class="th" style="animation-delay:${i*.06}s" data-id="${t.id}">${av(o[0])}<div class="info"><h3>${t.title}</h3><div class="meta"><span class="tag">${CATS[t.cat]}</span>par ${o[0]} · dernière réponse ${l[1]} par ${l[0]}</div></div><div class="cnt"><b>${t.posts.length-1}</b>réponses</div><div class="cnt"><b>${t.views}</b>vues</div></div>`}).join(''):'<div class="none">Aucune discussion trouvée.</div>');
+ document.querySelectorAll('.th').forEach(e=>e.onclick=()=>location.hash='t'+e.dataset.id);
+}
+function post(p,i){const[n,d,t,l]=p,r=U[n]||'nov';
+ return `<div class="post ${i?'':'op'}" style="animation-delay:${i*.07}s">${av(n)}<div class="pb"><div class="ph"><strong>${esc(n)}</strong><span class="rank ${r==='mod'?'mod':''}">${R[r]}</span><span class="meta">${d} · #${i+1}</span></div><div class="pt">${t}</div><div class="pf"><button class="like" data-l="${l}">👍 <span>${l}</span></button></div></div></div>`}
+function thread(t){
+ $('main').innerHTML=`<button class="back" onclick="location.hash=''">← Retour aux discussions</button><div class="head"><h1>${t.title}</h1></div>`+t.posts.map(post).join('')+
+ `<div class="reply"><strong>Répondre</strong><textarea id="rt" placeholder="Votre message…"></textarea><div class="row"><input id="rn" placeholder="Votre pseudo" maxlength="20"><button class="btn" id="rb">Publier</button></div></div>`;
+ document.querySelectorAll('.like').forEach(b=>b.onclick=()=>{const on=b.classList.toggle('on'),s=b.querySelector('span');s.textContent=+b.dataset.l+(on?1:0)});
+ $('rb').onclick=()=>{const m=$('rt').value.trim();if(!m)return;t.posts.push([($('rn').value.trim()||'Invité'),"à l'instant",esc(m).replace(/\n/g,'<br>'),0]);thread(t);scrollTo({top:document.body.scrollHeight,behavior:'smooth'})};
+}
+function render(){side();const m=location.hash.match(/^#t(\d+)$/),t=m&&T.find(x=>x.id==m[1]);t?thread(t):list();if(t)scrollTo(0,0)}
+$('q').oninput=e=>{q=e.target.value.toLowerCase();location.hash='';list()};
+addEventListener('hashchange',render);render();
+</script>
+</body>
+</html>
